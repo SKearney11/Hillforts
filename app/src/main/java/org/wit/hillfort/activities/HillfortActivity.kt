@@ -8,6 +8,7 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImage
@@ -15,6 +16,7 @@ import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.Location
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
@@ -22,6 +24,8 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
     lateinit var app : MainApp
     var edit = false
     val IMAGE_REQUEST = 1
+    val LOCATION_REQUEST = 2
+    //var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +65,15 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         chooseImage.setOnClickListener {
             showImagePicker(this, IMAGE_REQUEST)
         }
+        hillfortLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (hillfort.zoom != 0f) {
+                location.lat =  hillfort.lat
+                location.lng = hillfort.lng
+                location.zoom = hillfort.zoom
+            }
+            startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
@@ -84,6 +97,14 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     hillfort.image = data.getData().toString()
                     hillfortImage.setImageBitmap(readImage(this, resultCode, data))
                     chooseImage.setText(R.string.change_hillfort_image)
+                }
+            }
+            LOCATION_REQUEST -> {
+                if (data != null) {
+                    val location = data.extras.getParcelable<Location>("location")
+                    hillfort.lat = location.lat
+                    hillfort.lng = location.lng
+                    hillfort.zoom = location.zoom
                 }
             }
         }
