@@ -19,7 +19,7 @@ import org.wit.hillfort.models.HillfortModel
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
     var hillfort = HillfortModel()
-    lateinit var app: MainApp
+    lateinit var app : MainApp
     var edit = false
     val IMAGE_REQUEST = 1
 
@@ -36,56 +36,52 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             description.setText(hillfort.description)
             btnAdd.setText(R.string.save_hillfort)
             hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
-            if (hillfort.image != null) {
-                chooseImage.setText(R.string.change_hillfort_image)
-            }
-            btnAdd.setOnClickListener() {
-                hillfort.title = hillfortTitle.text.toString()
-                hillfort.description = description.text.toString()
-                if (hillfort.title.isNotEmpty()) {
-                    if (edit) {
-                        app.hillforts.update(hillfort.copy())
-                    } else {
-                        app.hillforts.create(hillfort.copy())
-                    }
-                    info("add Button Pressed: $hillfort")
-                    //app.hillforts.findAll().forEach{info("add Button Pressed: $hillfortTitle")}
-                    setResult(AppCompatActivity.RESULT_OK)
-                    finish()
+        }
+        btnAdd.setOnClickListener() {
+            hillfort.title = hillfortTitle.text.toString()
+            hillfort.description = description.text.toString()
+            if (hillfort.title.isNotEmpty()) {
+                if (edit) {
+                    app.hillforts.update(hillfort.copy())
                 } else {
-                    toast(R.string.enter_hillfort_title)
+                    app.hillforts.create(hillfort.copy())
                 }
+                info("add Button Pressed: $hillfort")
+                //app.hillforts.findAll().forEach{info("add Button Pressed: $hillfortTitle")}
+                setResult(AppCompatActivity.RESULT_OK)
+                finish()
             }
-            chooseImage.setOnClickListener {
-                showImagePicker(this, IMAGE_REQUEST)
+            else {
+                toast(R.string.enter_hillfort_title)
+            }
+        }
+        chooseImage.setOnClickListener {
+            showImagePicker(this, IMAGE_REQUEST)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_hillfort, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            IMAGE_REQUEST -> {
+                if (data != null) {
+                    hillfort.image = data.getData().toString()
+                    hillfortImage.setImageBitmap(readImage(this, resultCode, data))
+                }
             }
         }
     }
-        override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-            menuInflater.inflate(R.menu.menu_hillfort, menu)
-            return super.onCreateOptionsMenu(menu)
-        }
-
-        override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-            when (item?.itemId) {
-                R.id.item_cancel -> {
-                    finish()
-                }
-            }
-            return super.onOptionsItemSelected(item)
-        }
-
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            when (requestCode) {
-                IMAGE_REQUEST -> {
-                    if (data != null) {
-                        hillfort.image = data.getData().toString()
-                        hillfortImage.setImageBitmap(readImage(this, resultCode, data))
-                        chooseImage.setText(R.string.change_hillfort_image)
-                    }
-                }
-            }
-        }
-    }
-
+}
