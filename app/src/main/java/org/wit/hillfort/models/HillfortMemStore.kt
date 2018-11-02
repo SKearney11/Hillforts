@@ -3,13 +3,14 @@ package org.wit.hillfort.models
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
-var lastId = 0L
+var lastHillfortId = 0L
 
-internal fun getId(): Long {
-    return lastId++
-}
+
 
 class HillfortMemStore:HillfortStore, AnkoLogger {
+    private fun getId(): Long {
+        return lastHillfortId++
+    }
 
     val hillforts = ArrayList<HillfortModel>()
 

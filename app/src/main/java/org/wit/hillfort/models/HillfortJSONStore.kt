@@ -9,18 +9,17 @@ import org.wit.hillfort.helpers.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-val JSON_FILE = "hillforts.json"
-val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
-val listType = object : TypeToken<java.util.ArrayList<HillfortModel>>() {}.type
-
-fun generateRandomId(): Long {
-    return Random().nextLong()
-}
-
 class HillfortJSONStore : HillfortStore, AnkoLogger {
 
     val context: Context
     var hillforts = mutableListOf<HillfortModel>()
+    val JSON_FILE = "hillforts.json"
+    val gsonBuilder = GsonBuilder().setPrettyPrinting().create()
+    val listType = object : TypeToken<java.util.ArrayList<HillfortModel>>() {}.type
+
+    fun generateRandomId(): Long {
+        return Random().nextLong()
+    }
 
     constructor (context: Context) {
         this.context = context

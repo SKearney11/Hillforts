@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
+
+    <Button
+            android:text="OK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/SignupOk" android:layout_marginTop="109dp"
+            app:layout_constraintTop_toBottomOf="@+id/SignupPassword" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="148dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="148dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Username"
+            android:ems="10"
+            android:id="@+id/SignupUsername" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="102dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="84dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="85dp"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:hint="Password"
+            android:id="@+id/SignupPassword" android:layout_marginTop="42dp"
+            app:layout_constraintTop_toBottomOf="@+id/SignupUsername" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="84dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="85dp"/>
+
+</android.support.constraint.ConstraintLayout>
