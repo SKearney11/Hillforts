@@ -76,11 +76,10 @@
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"/>
 
-                <ImageView
-                        android:id="@+id/hillfortImage"
+                <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_images"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srcCompat="@mipmap/ic_launcher"/>
+                        android:layout_height="wrap_content"/>
 
                 <Button
                         android:id="@+id/hillfortLocation"
