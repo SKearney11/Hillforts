@@ -31,8 +31,11 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
         app = application as MainApp
+
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         if (intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit")
