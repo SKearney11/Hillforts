@@ -7,9 +7,9 @@ import org.wit.hillfort.models.*
 
 class MainApp : Application(), AnkoLogger {
 
-    //val hillforts = ArrayList<HillfortModel>()
     lateinit var hillforts: HillfortStore
     lateinit var users: UserStore
+    //lateinit var loggedInUser: UserModel
 
     override fun onCreate() {
         super.onCreate()

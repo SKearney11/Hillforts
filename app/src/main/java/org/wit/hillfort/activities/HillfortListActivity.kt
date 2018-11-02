@@ -3,6 +3,8 @@ package org.wit.hillfort.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
@@ -23,10 +25,18 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
         toolbarMain.title = title
         setSupportActionBar(toolbarMain)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setHomeAsUpIndicator(R.drawable.ic_menu)
+        }
 
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         loadHillforts()
+
+        nav_view.setNavigationItemSelectedListener { menuItem ->
+            onOptionsItemSelected(menuItem)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,10 +47,13 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult<HillfortActivity>(0)
+            R.id.item_settings -> startActivityForResult<SettingsActivity>(0)
             R.id.item_logout -> {
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()
             }
+            android.R.id.home -> drawer.openDrawer(GravityCompat.START)
+
         }
         return super.onOptionsItemSelected(item)
     }

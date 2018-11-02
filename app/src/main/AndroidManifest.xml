@@ -29,6 +29,9 @@
         <activity android:name=".activities.SignupActivity">
         </activity>
 
+        <activity android:name=".activities.SettingsActivity">
+        </activity>
+
         <activity android:name=".activities.HillfortActivity"
                   android:parentActivityName=".activities.HillfortListActivity">
             <meta-data
@@ -57,5 +60,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
