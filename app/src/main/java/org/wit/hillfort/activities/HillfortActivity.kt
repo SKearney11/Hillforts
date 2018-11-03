@@ -4,13 +4,9 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.GridLayout
-import kotlinx.android.synthetic.main.abc_activity_chooser_view.*
 import kotlinx.android.synthetic.main.activity_hillfort.*
-import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.intentFor
@@ -50,6 +46,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfortTitle.setText(hillfort.title)
             description.setText(hillfort.description)
             additionalNotes.setText(hillfort.additionalNotes)
+            visitedCheckbox.isChecked = hillfort.visitedCheckbox
             btnAdd.setText(R.string.save_hillfort)
             loadImages()
             if (hillfort.images != null) {
@@ -61,6 +58,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = description.text.toString()
             hillfort.additionalNotes = additionalNotes.text.toString()
+            hillfort.visitedCheckbox = visitedCheckbox.isChecked
             if (hillfort.title.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())
