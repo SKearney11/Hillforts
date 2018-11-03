@@ -49,6 +49,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit")
             hillfortTitle.setText(hillfort.title)
             description.setText(hillfort.description)
+            additionalNotes.setText(hillfort.additionalNotes)
             btnAdd.setText(R.string.save_hillfort)
             loadImages()
             if (hillfort.images != null) {
@@ -59,6 +60,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         btnAdd.setOnClickListener() {
             hillfort.title = hillfortTitle.text.toString()
             hillfort.description = description.text.toString()
+            hillfort.additionalNotes = additionalNotes.text.toString()
             if (hillfort.title.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())

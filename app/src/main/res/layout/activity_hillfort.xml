@@ -64,6 +64,19 @@
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="14sp"/>
 
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/additionalNotes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:hint="Additional Notes"
+                        android:inputType="text"
+                        android:maxLength="250"
+                        android:maxLines="5"
+                        android:padding="8dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="14sp"/>
+
                 <Button
                         android:id="@+id/chooseImage"
                         android:layout_width="match_parent"
