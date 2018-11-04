@@ -70,7 +70,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
                     app.hillforts.create(hillfort.copy())
                 }
                 info("add Button Pressed: $hillfort")
-                //app.hillforts.findAll().forEach{info("add Button Pressed: $hillfortTitle")}
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()
             }

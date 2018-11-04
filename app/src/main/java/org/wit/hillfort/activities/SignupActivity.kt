@@ -26,7 +26,6 @@ class SignupActivity: AppCompatActivity() {
                 toast("Please enter Username and Password")
                 return@setOnClickListener
             }
-
             app.users.create(UserModel(username = username, password = password))
             setResult(AppCompatActivity.RESULT_OK)
             finish()

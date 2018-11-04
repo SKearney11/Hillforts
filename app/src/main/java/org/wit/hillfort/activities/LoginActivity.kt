@@ -23,12 +23,17 @@ class LoginActivity: AppCompatActivity() {
             val username = LoginUsername.text.toString()
             val password = LoginPassword.text.toString()
 
-            if (username.isEmpty() || password.isEmpty()) return@setOnClickListener
+            if (username.isEmpty() || password.isEmpty()){
+                toast("Enter username and password")
+                return@setOnClickListener
+            }
 
             val foundUser : UserModel? = app.users.findAll().find{ u -> u.username == username }
-
             if (foundUser != null && foundUser.password == password)
             {
+                LoginUsername.setText("")
+                LoginPassword.setText("")
+                app.currentUser = foundUser
                 startActivityForResult(intentFor<HillfortListActivity>(), 0)
             } else {
                 toast("Incorrect username or Password")
