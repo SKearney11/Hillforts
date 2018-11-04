@@ -12,7 +12,10 @@ data class HillfortModel(var id:Long = 0,
                          var lng: Double = 0.0,
                          var zoom: Float = 0f,
                          var additionalNotes: String = "",
-                         var visitedCheckbox: Boolean = false):Parcelable
+                         var visitedCheckbox: Boolean = false,
+                         var day: Int = 1,
+                         var month: Int = 1,
+                         var year: Int = 2018):Parcelable
 
 @Parcelize
 data class Location(var lat: Double = 0.0,

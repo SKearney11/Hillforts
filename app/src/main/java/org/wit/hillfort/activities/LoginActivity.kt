@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
@@ -26,7 +27,12 @@ class LoginActivity: AppCompatActivity() {
 
             val foundUser : UserModel? = app.users.findAll().find{ u -> u.username == username }
 
-            if (foundUser != null && foundUser.password == password) startActivityForResult(intentFor<HillfortListActivity>(), 0)
+            if (foundUser != null && foundUser.password == password)
+            {
+                startActivityForResult(intentFor<HillfortListActivity>(), 0)
+            } else {
+                toast("Incorrect username or Password")
+            }
         }
 
         LoginSignup.setOnClickListener {

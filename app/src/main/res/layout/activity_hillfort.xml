@@ -80,10 +80,19 @@
                 <CheckBox
                         android:id="@+id/visitedCheckbox"
                         android:text="Visited"
-
-                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_margin="8dp"/>
+
+                <DatePicker
+                        android:id="@+id/datePicker"
+                        android:layout_width="300dp"
+                        android:layout_height="150dp"
+                        android:datePickerMode="spinner"
+                        android:layout_gravity="center"
+                        android:calendarViewShown="false"/>
+
                 <Button
                         android:id="@+id/chooseImage"
                         android:layout_width="match_parent"

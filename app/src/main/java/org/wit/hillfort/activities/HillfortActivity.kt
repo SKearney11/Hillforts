@@ -47,6 +47,7 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             description.setText(hillfort.description)
             additionalNotes.setText(hillfort.additionalNotes)
             visitedCheckbox.isChecked = hillfort.visitedCheckbox
+            datePicker.updateDate(hillfort.year, hillfort.month, hillfort.day)
             btnAdd.setText(R.string.save_hillfort)
             loadImages()
             if (hillfort.images != null) {
@@ -59,6 +60,9 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
             hillfort.description = description.text.toString()
             hillfort.additionalNotes = additionalNotes.text.toString()
             hillfort.visitedCheckbox = visitedCheckbox.isChecked
+            hillfort.day = datePicker.dayOfMonth
+            hillfort.month = datePicker.month
+            hillfort.year = datePicker.year
             if (hillfort.title.isNotEmpty()) {
                 if (edit) {
                     app.hillforts.update(hillfort.copy())

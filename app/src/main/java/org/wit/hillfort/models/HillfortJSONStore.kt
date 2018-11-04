@@ -46,6 +46,9 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
             foundHillfort.visitedCheckbox = hillfort.visitedCheckbox
             foundHillfort.additionalNotes = hillfort.additionalNotes
             foundHillfort.images = ArrayList(hillfort.images)
+            foundHillfort.day = hillfort.day
+            foundHillfort.month = hillfort.month
+            foundHillfort.year = hillfort.year
             foundHillfort.lat = hillfort.lat
             foundHillfort.lng = hillfort.lng
             foundHillfort.zoom = hillfort.zoom
