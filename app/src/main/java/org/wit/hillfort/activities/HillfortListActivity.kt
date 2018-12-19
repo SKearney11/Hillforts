@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
@@ -48,6 +49,7 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
         when (item?.itemId) {
             R.id.item_add -> startActivityForResult<HillfortActivity>(0)
             R.id.item_settings -> startActivityForResult<SettingsActivity>(0)
+            R.id.item_map -> startActivity<HillfortMapsActivity>()
             R.id.item_logout -> {
                 setResult(AppCompatActivity.RESULT_OK)
                 finish()

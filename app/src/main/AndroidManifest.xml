@@ -14,29 +14,23 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-
         <activity android:name=".activities.HillfortListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.LoginActivity">
         </activity>
-
         <activity android:name=".activities.SignupActivity">
         </activity>
-
         <activity android:name=".activities.SettingsActivity">
         </activity>
-
-        <activity android:name=".activities.HillfortActivity"
-                  android:parentActivityName=".activities.HillfortListActivity">
+        <activity
+                android:name=".activities.HillfortActivity"
+                android:parentActivityName=".activities.HillfortListActivity">
             <meta-data
                     android:name="android.support.PARENT_ACTIVITY"
-                    android:value=".activities.HillfortListActivity" />
+                    android:value=".activities.HillfortListActivity"/>
         </activity>
 
         <meta-data
@@ -47,17 +41,22 @@
                 android:name=".activities.MapsActivity"
                 android:label="@string/title_activity_maps">
         </activity>
-
         <activity
                 android:name=".activities.SplashActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/app_name"
                 android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+                android:name=".activities.HillfortMapsActivity"
+                android:label="@string/title_activity_hillfort_maps"
+                android:theme="@style/AppTheme">
+        </activity>
     </application>
+
 </manifest>
