@@ -8,31 +8,22 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
-import org.wit.hillfort.helpers.showImagePicker
-import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.models.Location
 
 class HillfortActivity : AppCompatActivity(), AnkoLogger {
 
+    lateinit var presenter: HillfortPresenter
     var hillfort = HillfortModel()
-    lateinit var app : MainApp
-    var edit = false
-    val IMAGE_REQUEST = 1
-    val LOCATION_REQUEST = 2
-    //var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
-        app = application as MainApp
-
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
+
+        presenter = HillfortPresenter(this)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val layoutManager = GridLayoutManager(this, 3)
@@ -40,102 +31,64 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         rv_images.layoutManager = layoutManager
         rv_images.adapter = HillfortImageAdapter(hillfort.images)
 
-        if (intent.hasExtra("hillfort_edit")) {
-            edit = true
-            hillfort = intent.extras.getParcelable<HillfortModel>("hillfort_edit")
-            hillfortTitle.setText(hillfort.title)
-            description.setText(hillfort.description)
-            additionalNotes.setText(hillfort.additionalNotes)
-            visitedCheckbox.isChecked = hillfort.visitedCheckbox
-            datePicker.updateDate(hillfort.year, hillfort.month, hillfort.day)
-            btnAdd.setText(R.string.save_hillfort)
-            loadImages()
-            if (hillfort.images != null) {
-                chooseImage.setText(R.string.change_hillfort_image)
-            }
-        }
-
-        btnAdd.setOnClickListener() {
-            hillfort.title = hillfortTitle.text.toString()
-            hillfort.description = description.text.toString()
-            hillfort.additionalNotes = additionalNotes.text.toString()
-            hillfort.visitedCheckbox = visitedCheckbox.isChecked
-            hillfort.day = datePicker.dayOfMonth
-            hillfort.month = datePicker.month
-            hillfort.year = datePicker.year
-            if (hillfort.title.isNotEmpty()) {
-                if (edit) {
-                    app.hillforts.update(hillfort.copy())
-                } else {
-                    app.hillforts.create(hillfort.copy())
-                }
-                info("add Button Pressed: $hillfort")
-                setResult(AppCompatActivity.RESULT_OK)
-                finish()
-            }
-            else {
+        btnAdd.setOnClickListener {
+            if (hillfortTitle.text.toString().isEmpty()) {
                 toast(R.string.enter_hillfort_title)
+            } else {
+                presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), additionalNotes.text.toString(), visitedCheckbox.isChecked, datePicker.dayOfMonth, datePicker.month, datePicker.year)
             }
-        }
-        chooseImage.setOnClickListener {
-            showImagePicker(this, IMAGE_REQUEST)
         }
 
-        hillfortLocation.setOnClickListener {
-            val location = Location(52.245696, -7.139102, 15f)
-            if (hillfort.zoom != 0f) {
-                location.lat =  hillfort.lat
-                location.lng = hillfort.lng
-                location.zoom = hillfort.zoom
-            }
-            startActivityForResult(intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+        chooseImage.setOnClickListener { presenter.doSelectImage() }
+
+        hillfortLocation.setOnClickListener { presenter.doSetLocation() }
+    }
+
+    fun showHillfort(hillfort: HillfortModel) {
+        hillfortTitle.setText(hillfort.title)
+        description.setText(hillfort.description)
+        additionalNotes.setText(hillfort.additionalNotes)
+        visitedCheckbox.isChecked = hillfort.visitedCheckbox
+        datePicker.updateDate(hillfort.year, hillfort.month, hillfort.day)
+        btnAdd.setText(R.string.save_hillfort)
+        loadImages()
+        if (hillfort.images != null) {
+            chooseImage.setText(R.string.change_hillfort_image)
         }
     }
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
+        //if (presenter.edit) menu?.getItem(0)?.setVisible(true)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_cancel -> {
-                finish()
+                presenter.doCancel()
             }
             R.id.item_delete -> {
-                app.hillforts.delete(hillfort.copy())
-                finish()
+                presenter.doDelete()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            IMAGE_REQUEST -> {
-                if (data != null) {
-                    hillfort.images.add(data.getData().toString())
-                    loadImages()
-                    chooseImage.setText(R.string.change_hillfort_image)
-                }
-            }
-            LOCATION_REQUEST -> {
-                if (data != null) {
-                    val location = data.extras.getParcelable<Location>("location")
-                    hillfort.lat = location.lat
-                    hillfort.lng = location.lng
-                    hillfort.zoom = location.zoom
-                }
-            }
-        }
-    }
-
-    private fun loadImages() {
+    fun loadImages() {
         showImages(hillfort.images)
     }
 
     fun showImages(images: List<String>) {
         rv_images.adapter = HillfortImageAdapter(images)
         rv_images.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            presenter.doActivityResult(requestCode, resultCode, data)
+        }
     }
 }
