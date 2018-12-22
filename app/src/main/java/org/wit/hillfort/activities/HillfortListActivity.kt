@@ -17,13 +17,11 @@ import org.wit.hillfort.models.HillfortModel
 
 class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
-    lateinit var app: MainApp
+    lateinit var presenter: HillfortListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_list)
-        app = application as MainApp
-
         toolbarMain.title = title
         setSupportActionBar(toolbarMain)
         supportActionBar?.apply {
@@ -31,9 +29,14 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
             setHomeAsUpIndicator(R.drawable.ic_menu)
         }
 
+        presenter = HillfortListPresenter(this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        loadHillforts()
+        recyclerView.adapter = HillfortAdapter(presenter.getHillforts(), this)
+        recyclerView.adapter?.notifyDataSetChanged()
+
+
+        //loadHillforts()
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             onOptionsItemSelected(menuItem)
@@ -47,34 +50,24 @@ class HillfortListActivity : AppCompatActivity(), HillfortListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
-            R.id.item_add -> startActivityForResult<HillfortActivity>(0)
-            R.id.item_settings -> startActivityForResult<SettingsActivity>(0)
-            R.id.item_map -> startActivity<HillfortMapsActivity>()
-            R.id.item_logout -> {
-                setResult(AppCompatActivity.RESULT_OK)
-                finish()
-            }
-            android.R.id.home -> drawer.openDrawer(GravityCompat.START)
+            R.id.item_add -> presenter.doAddHillfort()
+            R.id.item_settings -> presenter.doShowSettings()
+            R.id.item_map -> presenter.doShowHillfortsMap()
+            R.id.item_logout -> presenter.doLogout()
+            android.R.id.home -> presenter.doHome()
 
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onHillfortClick(hillfort: HillfortModel) {
-        startActivityForResult(intentFor<HillfortActivity>().putExtra("hillfort_edit",hillfort), 0)
+        presenter.doEditHillfort(hillfort)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        loadHillforts()
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    private fun loadHillforts() {
-        showHillforts(app.hillforts.findAll())
-    }
-
-    fun showHillforts(hillforts: List<HillfortModel>) {
-        recyclerView.adapter = HillfortAdapter(hillforts, this)
+        //loadHillforts()
+        //super.onActivityResult(requestCode, resultCode, data)
         recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
