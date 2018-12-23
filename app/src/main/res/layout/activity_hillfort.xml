@@ -82,7 +82,7 @@
                         android:text="Visited"
                         android:layout_gravity="center"
                         android:layout_width="100dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="20dp"
                         android:layout_margin="8dp"/>
 
                 <DatePicker

@@ -57,7 +57,6 @@ class HillfortActivity : AppCompatActivity(), AnkoLogger {
         }
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
         //if (presenter.edit) menu?.getItem(0)?.setVisible(true)
