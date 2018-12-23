@@ -8,7 +8,7 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.views.HillfortMapsView
+import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.views.SettingsView
 import org.wit.hillfort.views.hillfort.HillfortView
 
@@ -30,7 +30,7 @@ class HillfortListPresenter(val activity: HillfortListView) {
     }
 
     fun doShowHillfortsMap(){
-        activity.startActivity<HillfortMapsView>()
+        activity.startActivity<HillfortMapView>()
     }
 
     fun doShowSettings(){

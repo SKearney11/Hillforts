@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".views.HillfortMapsView"
+                android:name=".views.map.HillfortMapView"
                 android:label="@string/title_activity_hillfort_maps"
                 android:theme="@style/AppTheme">
         </activity>
