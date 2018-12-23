@@ -1,23 +1,16 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.editlocation
 
-import android.app.Activity
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.hillfort.R
-import org.wit.hillfort.models.Location
 
-class MapsActivity : AppCompatActivity(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
-    lateinit var presenter: MapsPresenter
+    lateinit var presenter: EditLocationPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +18,7 @@ class MapsActivity : AppCompatActivity(), GoogleMap.OnMarkerDragListener, Google
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-        presenter = MapsPresenter(this)
+        presenter = EditLocationPresenter(this)
         mapFragment.getMapAsync{
             map = it
             map.setOnMarkerDragListener(this)

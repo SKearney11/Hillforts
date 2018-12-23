@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -8,8 +8,9 @@ import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.UserModel
+import org.wit.hillfort.views.hillfortlist.HillfortListView
 
-class LoginActivity: AppCompatActivity() {
+class LoginView: AppCompatActivity() {
 
     private lateinit var app: MainApp
 
@@ -34,14 +35,14 @@ class LoginActivity: AppCompatActivity() {
                 LoginUsername.setText("")
                 LoginPassword.setText("")
                 app.currentUser = foundUser
-                startActivityForResult(intentFor<HillfortListActivity>(), 0)
+                startActivityForResult(intentFor<HillfortListView>(), 0)
             } else {
                 toast("Incorrect username or Password")
             }
         }
 
         LoginSignup.setOnClickListener {
-            startActivityForResult(intentFor<SignupActivity>(), 0)
+            startActivityForResult(intentFor<SignupView>(), 0)
         }
 
     }

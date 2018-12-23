@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfort
 
 import android.content.Intent
 import kotlinx.android.synthetic.main.activity_hillfort.*
@@ -8,8 +8,9 @@ import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
+import org.wit.hillfort.views.editlocation.EditLocationView
 
-class HillfortPresenter(val activity: HillfortActivity) {
+class HillfortPresenter(val activity: HillfortView) {
 
     val IMAGE_REQUEST = 1
     val LOCATION_REQUEST = 2
@@ -65,7 +66,7 @@ class HillfortPresenter(val activity: HillfortActivity) {
             location.lng = hillfort.lng
             location.zoom = hillfort.zoom
         }
-        activity.startActivityForResult(activity.intentFor<MapsActivity>().putExtra("location", location), LOCATION_REQUEST)
+        activity.startActivityForResult(activity.intentFor<EditLocationView>().putExtra("location", location), LOCATION_REQUEST)
     }
 
     fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent){

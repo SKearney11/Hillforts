@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfort
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -11,8 +11,9 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.views.HillfortImageAdapter
 
-class HillfortActivity : AppCompatActivity(), AnkoLogger {
+class HillfortView : AppCompatActivity(), AnkoLogger {
 
     lateinit var presenter: HillfortPresenter
     var hillfort = HillfortModel()

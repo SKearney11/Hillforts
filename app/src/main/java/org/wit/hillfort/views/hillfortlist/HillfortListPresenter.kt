@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.hillfortlist
 
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.AppCompatActivity
@@ -8,8 +8,11 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.views.HillfortMapsView
+import org.wit.hillfort.views.SettingsView
+import org.wit.hillfort.views.hillfort.HillfortView
 
-class HillfortListPresenter(val activity: HillfortListActivity) {
+class HillfortListPresenter(val activity: HillfortListView) {
     lateinit var app: MainApp
 
     init{
@@ -19,19 +22,19 @@ class HillfortListPresenter(val activity: HillfortListActivity) {
     fun getHillforts()=app.hillforts.findAll()
 
     fun doAddHillfort(){
-        activity.startActivityForResult<HillfortActivity>(0)
+        activity.startActivityForResult<HillfortView>(0)
     }
 
     fun doEditHillfort(hillfort: HillfortModel){
-        activity.startActivityForResult(activity.intentFor<HillfortActivity>().putExtra("hillfort_edit", hillfort),0)
+        activity.startActivityForResult(activity.intentFor<HillfortView>().putExtra("hillfort_edit", hillfort),0)
     }
 
     fun doShowHillfortsMap(){
-        activity.startActivity<HillfortMapsActivity>()
+        activity.startActivity<HillfortMapsView>()
     }
 
     fun doShowSettings(){
-        activity.startActivityForResult<SettingsActivity>(0)
+        activity.startActivityForResult<SettingsView>(0)
     }
 
     fun doLogout(){

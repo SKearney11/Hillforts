@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views.editlocation
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.hillfort.models.Location
 
-class MapsPresenter(val activity: MapsActivity) {
+class EditLocationPresenter(val activity: EditLocationView) {
     var location = Location()
 
     init {

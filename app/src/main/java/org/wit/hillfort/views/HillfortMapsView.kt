@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
@@ -9,13 +9,11 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import org.wit.hillfort.R
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
-import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.android.synthetic.main.card_hillfort.view.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.main.MainApp
 
-class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
+class HillfortMapsView : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
     lateinit var map: GoogleMap
     lateinit var app: MainApp
@@ -73,7 +71,7 @@ class HillfortMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
         val hillfort = app.hillforts.findById(tag)
         currentTitle.text = marker.title
         currentDescription.text = hillfort!!.description
-        if (hillfort.images.isNotEmpty())imageView3.setImageBitmap(readImageFromPath(this@HillfortMapsActivity, hillfort.images.first()))
+        if (hillfort.images.isNotEmpty())imageView3.setImageBitmap(readImageFromPath(this@HillfortMapsView, hillfort.images.first()))
         return false
     }
 }

@@ -1,13 +1,12 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.wit.hillfort.R
 import org.wit.hillfort.main.MainApp
-import org.wit.hillfort.models.UserModel
 
-class SettingsActivity: AppCompatActivity() {
+class SettingsView: AppCompatActivity() {
 
     private lateinit var app: MainApp
     var v = 0

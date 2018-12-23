@@ -1,4 +1,4 @@
-package org.wit.hillfort.activities
+package org.wit.hillfort.views
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,13 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import org.wit.hillfort.R
 
 
-class SplashActivity : AppCompatActivity() {
+class SplashView : AppCompatActivity() {
     private var mDelayHandler: Handler? = null
     private val SPLASH_DELAY: Long = 3000
 
     internal val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
-            val intent = Intent(applicationContext, LoginActivity::class.java)
+            val intent = Intent(applicationContext, LoginView::class.java)
             startActivity(intent)
             finish()
         }
