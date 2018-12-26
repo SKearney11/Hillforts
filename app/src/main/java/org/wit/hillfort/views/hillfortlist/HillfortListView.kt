@@ -8,12 +8,12 @@ import android.view.*
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.views.HillfortAdapter
-import org.wit.hillfort.views.HillfortListener
+import org.wit.hillfort.views.BaseView
 
-class HillfortListView : AppCompatActivity(), HillfortListener {
+class HillfortListView : BaseView(), HillfortListener {
 
     lateinit var presenter: HillfortListPresenter
+    var showFavorites = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +28,7 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
         presenter = HillfortListPresenter(this)
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = HillfortAdapter(presenter.getHillforts(), this)
-        recyclerView.adapter?.notifyDataSetChanged()
-
+        showHillforts(presenter.getHillforts())
 
         //loadHillforts()
 
@@ -50,6 +48,10 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
             R.id.item_settings -> presenter.doShowSettings()
             R.id.item_map -> presenter.doShowHillfortsMap()
             R.id.item_logout -> presenter.doLogout()
+            R.id.item_favorites -> {
+                item.isChecked = !item.isChecked
+                presenter.doShowFavorites(item.isChecked)
+            }
             android.R.id.home -> presenter.doHome()
 
         }
@@ -65,5 +67,10 @@ class HillfortListView : AppCompatActivity(), HillfortListener {
         //super.onActivityResult(requestCode, resultCode, data)
         recyclerView.adapter?.notifyDataSetChanged()
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun showHillforts(hillforts: List<HillfortModel>){
+        recyclerView.adapter = HillfortAdapter(hillforts, this)
+        recyclerView.adapter?.notifyDataSetChanged()
     }
 }

@@ -22,4 +22,9 @@
             android:icon="@android:drawable/ic_menu_mapmode"
             android:title="Map"
             app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/item_favorites"
+        android:title="Show Favorites"
+        android:checkable="true"/>
 </menu>

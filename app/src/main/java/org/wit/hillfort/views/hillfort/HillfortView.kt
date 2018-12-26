@@ -8,15 +8,16 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
-import org.wit.hillfort.views.HillfortImageAdapter
+import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.views.hillfortlist.HillfortImageAdapter
 
-class HillfortView : AppCompatActivity(), AnkoLogger {
+class HillfortView : BaseView() {
 
     lateinit var presenter: HillfortPresenter
-    var hillfort = HillfortModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,36 +25,37 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         toolbarAdd.title = title
         setSupportActionBar(toolbarAdd)
 
-        presenter = HillfortPresenter(this)
+        presenter = initPresenter(HillfortPresenter(this as BaseView)) as HillfortPresenter
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val layoutManager = GridLayoutManager(this, 3)
-        rv_images.setHasFixedSize(true)
-        rv_images.layoutManager = layoutManager
-        rv_images.adapter = HillfortImageAdapter(hillfort.images)
+        rv_images.layoutManager = GridLayoutManager(this, 3)
 
         btnAdd.setOnClickListener {
             if (hillfortTitle.text.toString().isEmpty()) {
                 toast(R.string.enter_hillfort_title)
             } else {
-                presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), additionalNotes.text.toString(), visitedCheckbox.isChecked, datePicker.dayOfMonth, datePicker.month, datePicker.year)
+                presenter.doAddOrSave(hillfortTitle.text.toString(), description.text.toString(), additionalNotes.text.toString(), visitedCheckbox.isChecked, datePicker.dayOfMonth, datePicker.month, datePicker.year, favoriteCheckbox.isChecked, rating.rating)
             }
         }
 
         chooseImage.setOnClickListener { presenter.doSelectImage() }
 
         hillfortLocation.setOnClickListener { presenter.doSetLocation() }
+
+        presenter.doShowHillfort()
     }
 
-    fun showHillfort(hillfort: HillfortModel) {
+    override fun showHillfort(hillfort: HillfortModel) {
         hillfortTitle.setText(hillfort.title)
         description.setText(hillfort.description)
         additionalNotes.setText(hillfort.additionalNotes)
         visitedCheckbox.isChecked = hillfort.visitedCheckbox
         datePicker.updateDate(hillfort.year, hillfort.month, hillfort.day)
         btnAdd.setText(R.string.save_hillfort)
-        loadImages()
-        if (hillfort.images != null) {
+        rating.rating = hillfort.rating
+        showImages(hillfort.images)
+        if (hillfort.images.isNotEmpty()) {
             chooseImage.setText(R.string.change_hillfort_image)
         }
     }
@@ -76,11 +78,8 @@ class HillfortView : AppCompatActivity(), AnkoLogger {
         return super.onOptionsItemSelected(item)
     }
 
-    fun loadImages() {
-        showImages(hillfort.images)
-    }
-
     fun showImages(images: List<String>) {
+        info("IMAGES: ${images.size}")
         rv_images.adapter = HillfortImageAdapter(images)
         rv_images.adapter?.notifyDataSetChanged()
     }
