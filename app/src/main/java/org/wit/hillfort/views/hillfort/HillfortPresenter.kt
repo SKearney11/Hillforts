@@ -1,9 +1,18 @@
 package org.wit.hillfort.views.hillfort
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.intentFor
 import org.wit.hillfort.R
+import org.wit.hillfort.helpers.checkLocationPermissions
+import org.wit.hillfort.helpers.isPermissionGranted
 import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.main.MainApp
 import org.wit.hillfort.models.HillfortModel
@@ -17,16 +26,29 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
     val IMAGE_REQUEST = 1
     val LOCATION_REQUEST = 2
-
+    var defaultLocation = Location(52.245696, -7.139102, 15f)
     var hillfort = HillfortModel()
     var location = Location(52.245696, -7.139102, 15f)
     var edit = false
+
+    var map: GoogleMap? = null
+    var locationService: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(view)
 
     init{
         if (view.intent.hasExtra("hillfort_edit")) {
             edit = true
             hillfort = view.intent.extras.getParcelable<HillfortModel>("hillfort_edit")
             view.showHillfort(hillfort)
+        } else {
+            if (checkLocationPermissions(view)) {
+                doSetCurrentLocation()
+            }
+            hillfort.lat = defaultLocation.lat
+            hillfort.lng = defaultLocation.lng
+        }
+
+        if (checkLocationPermissions(view)) {
+            doSetCurrentLocation()
         }
     }
 
@@ -69,20 +91,25 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
         view!!.showHillfort(hillfort)
     }
 
-    fun doSetLocation(){
-        if (edit == false) {
-            view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", location)
-        } else {
-            view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(hillfort.lat, hillfort.lng, hillfort.zoom))
-        }
-        /*
-        if (hillfort.zoom != 0f) {
-            location.lat =  hillfort.lat
-            location.lng = hillfort.lng
-            location.zoom = hillfort.zoom
-        }
-        activity.startActivityForResult(activity.intentFor<EditLocationView>().putExtra("location", location), LOCATION_REQUEST)
-        */
+    fun doSetLocation() {
+        view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(hillfort.lat, hillfort.lng, hillfort.zoom))
+    }
+
+    fun doConfigureMap(m: GoogleMap) {
+        map = m
+        locationUpdate(hillfort.lat, hillfort.lng)
+    }
+
+    fun locationUpdate(lat: Double, lng: Double) {
+        hillfort.lat = lat
+        hillfort.lng = lng
+        hillfort.zoom = 15f
+        map?.clear()
+        map?.uiSettings?.setZoomControlsEnabled(true)
+        val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.lat, hillfort.lng))
+        map?.addMarker(options)
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.lat, hillfort.lng), hillfort.zoom))
+        view?.showHillfort(hillfort)
     }
 
     override fun doActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -101,8 +128,24 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
                     hillfort.lat = location.lat
                     hillfort.lng = location.lng
                     hillfort.zoom = location.zoom
+                    locationUpdate(hillfort.lat, hillfort.lng)
                 }
             }
+        }
+    }
+
+    override fun doRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (isPermissionGranted(requestCode, grantResults)) {
+            doSetCurrentLocation()
+        } else {
+            locationUpdate(defaultLocation.lat, defaultLocation.lng)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun doSetCurrentLocation() {
+        locationService.lastLocation.addOnSuccessListener {
+            locationUpdate(it.latitude, it.longitude)
         }
     }
 }

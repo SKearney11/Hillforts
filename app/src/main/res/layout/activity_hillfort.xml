@@ -95,7 +95,7 @@
 
                 <RatingBar
                         android:id="@+id/rating"
-                        android:layout_width="250dp"
+                        android:layout_width="245dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"/>
 
@@ -136,6 +136,12 @@
                         android:text="@string/button_location"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"/>
+
+
+                <com.google.android.gms.maps.MapView
+                        android:layout_width="300dp"
+                        android:layout_height="300dp" android:id="@+id/mapView3"
+                        android:layout_gravity="center"/>
 
                 <Button
                         android:id="@+id/btnAdd"
