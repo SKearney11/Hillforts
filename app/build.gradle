@@ -26,6 +26,22 @@ androidExtensions {
     experimental = true
 }
 
+ext {
+    app_compat_version = '1.0.2'
+    constraint_layout_version = '2.0.0-alpha2'
+    material_version = '1.0.0'
+    cardview_version = '1.0.0'
+    design_library_version = '26.1.0'
+    support_library_version = '26.1.0'
+
+    play_services_maps_version = '16.0.0'
+    play_services_location_version = '16.0.0'
+
+    anko_version = '0.10.7'
+    anko_commons_version = '0.10.7'
+    gson_version = '2.8.5'
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
