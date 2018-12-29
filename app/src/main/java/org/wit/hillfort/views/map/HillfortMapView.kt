@@ -6,11 +6,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import org.wit.hillfort.R
 import kotlinx.android.synthetic.main.activity_hillfort_maps.*
+import kotlinx.android.synthetic.main.activity_maps.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
+import org.jetbrains.anko.toast
+import org.wit.hillfort.helpers.readImageFromPath
+import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.views.BaseView
 
-class HillfortMapView : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
+class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
 
     lateinit var presenter: HillfortMapPresenter
+    lateinit var map : GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +26,23 @@ class HillfortMapView : AppCompatActivity(), GoogleMap.OnMarkerClickListener {
 
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync {
-            presenter.doPopulateMap(it)
+            map = it
+            map.setOnMarkerClickListener(this)
+            presenter.loadHillforts()
         }
     }
+
+    override fun showHillforts(hillforts: List<HillfortModel>) {
+        presenter.doPopulateMap(map, hillforts)
+    }
+
+    override fun showHillfort(hillfort: HillfortModel) {
+        currentTitle.text = hillfort.title
+        currentDescription.text = hillfort.description
+        imageView3.setImageBitmap(readImageFromPath(this, hillfort.images.first()))
+    }
+
+
 
     override fun onDestroy() {
         super.onDestroy()
