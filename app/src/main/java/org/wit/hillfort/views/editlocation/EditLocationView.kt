@@ -1,14 +1,13 @@
 package org.wit.hillfort.views.editlocation
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.Marker
 import org.wit.hillfort.R
+import org.wit.hillfort.views.BaseView
 
-class EditLocationView : AppCompatActivity(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class EditLocationView :  BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
     private lateinit var map: GoogleMap
     lateinit var presenter: EditLocationPresenter
 
