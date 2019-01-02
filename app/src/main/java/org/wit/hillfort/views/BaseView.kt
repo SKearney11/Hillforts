@@ -2,9 +2,9 @@ package org.wit.hillfort.views
 
 import android.content.Intent
 import android.os.Parcelable
-import android.support.v4.app.ActivityCompat.startActivityForResult
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import org.jetbrains.anko.AnkoLogger
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.editlocation.EditLocationView

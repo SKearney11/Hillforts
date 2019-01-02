@@ -1,9 +1,9 @@
 package org.wit.hillfort.views.hillfort
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
@@ -33,7 +33,7 @@ class HillfortView : BaseView() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        rv_images.layoutManager = GridLayoutManager(this, 3)
+        rv_images.layoutManager = androidx.recyclerview.widget.GridLayoutManager(this, 3)
 
         btnAdd.setOnClickListener {
             if (hillfortTitle.text.toString().isEmpty()) {
@@ -121,7 +121,7 @@ class HillfortView : BaseView() {
         mapView3.onResume()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView3.onSaveInstanceState(outState)
     }

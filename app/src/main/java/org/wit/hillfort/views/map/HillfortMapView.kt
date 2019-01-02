@@ -1,7 +1,7 @@
 package org.wit.hillfort.views.map
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import org.wit.hillfort.R
@@ -64,7 +64,7 @@ class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
         mapView.onResume()
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
     }

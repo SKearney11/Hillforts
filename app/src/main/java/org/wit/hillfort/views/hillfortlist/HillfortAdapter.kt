@@ -1,7 +1,7 @@
 package org.wit.hillfort.views.hillfortlist
 
 import android.app.Activity
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ interface HillfortListener {
     fun onHillfortClick(placemark: HillfortModel)
 }
 
-class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, private val listener: HillfortListener) : RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
+class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, private val listener: HillfortListener) : androidx.recyclerview.widget.RecyclerView.Adapter<HillfortAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MainHolder {
         return MainHolder(
@@ -38,7 +38,7 @@ class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, pr
 
     override fun getItemCount(): Int = hillforts.size
 
-    class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MainHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             itemView.hillfortTitle.text = hillfort.title
@@ -49,7 +49,7 @@ class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, pr
     }
 }
 
-class HillfortImageAdapter constructor(private var images: List<String>) : RecyclerView.Adapter<HillfortImageAdapter.MainHolder>(), AnkoLogger{
+class HillfortImageAdapter constructor(private var images: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<HillfortImageAdapter.MainHolder>(), AnkoLogger{
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MainHolder {
         info("I AM HERE\n")
@@ -69,7 +69,7 @@ class HillfortImageAdapter constructor(private var images: List<String>) : Recyc
 
     override fun getItemCount(): Int = images.size
 
-    class MainHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView), AnkoLogger {
+    class MainHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), AnkoLogger {
 
         fun bind(image: String){
             info("TESTIN\n\n\n\n\n\n")

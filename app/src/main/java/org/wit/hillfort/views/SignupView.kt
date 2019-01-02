@@ -1,7 +1,7 @@
 package org.wit.hillfort.views
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_signup.*
 import org.jetbrains.anko.toast
 import org.wit.hillfort.R

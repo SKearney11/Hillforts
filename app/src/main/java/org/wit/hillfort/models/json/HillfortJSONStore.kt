@@ -1,4 +1,4 @@
-package org.wit.hillfort.models
+package org.wit.hillfort.models.json
 
 import android.content.Context
 import com.google.gson.Gson
@@ -6,6 +6,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import org.jetbrains.anko.AnkoLogger
 import org.wit.hillfort.helpers.*
+import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.models.HillfortStore
 import java.util.*
 import kotlin.collections.ArrayList
 

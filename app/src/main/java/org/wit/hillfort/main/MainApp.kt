@@ -4,6 +4,7 @@ import android.app.Application
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.wit.hillfort.models.*
+import org.wit.hillfort.models.json.HillfortJSONStore
 
 class MainApp : Application(), AnkoLogger {
 
