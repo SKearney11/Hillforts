@@ -150,4 +150,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             locationUpdate(it.latitude, it.longitude)
         }
     }
+
+    fun createShareIntent(): Intent{
+        val text = "Hillfort: ${hillfort.title}, Description: ${hillfort.description}, Location: ${LatLng(hillfort.location.lat, hillfort.location.lng)}, Rating: ${hillfort.rating}"
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+        return shareIntent
+    }
 }

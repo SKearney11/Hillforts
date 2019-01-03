@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.widget.ShareActionProvider
+import androidx.core.view.MenuItemCompat
 import com.google.android.gms.maps.GoogleMap
 import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_hillfort.*
@@ -22,7 +24,7 @@ class HillfortView : BaseView() {
 
     lateinit var presenter: HillfortPresenter
     lateinit var map: GoogleMap
-
+    var shareActionProvider: ShareActionProvider? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,9 @@ class HillfortView : BaseView() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_hillfort, menu)
-        //if (presenter.edit) menu?.getItem(0)?.setVisible(true)
+        shareActionProvider = MenuItemCompat.getActionProvider(menu?.findItem(R.id.item_share)) as ShareActionProvider
+        shareActionProvider?.setShareHistoryFileName(ShareActionProvider.DEFAULT_SHARE_HISTORY_FILE_NAME)
+        shareActionProvider?.setShareIntent(presenter.createShareIntent())
         return super.onCreateOptionsMenu(menu)
     }
 
