@@ -1,7 +1,9 @@
 package org.wit.hillfort.views
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -29,11 +31,14 @@ class SettingsView: AppCompatActivity() {
 
             saveButton2.setOnClickListener {
                 if (newPassword.text.isNotEmpty()){
-                    v = 0
-                    app.currentUser.password = newPassword.text.toString()
-                    app.users.update(app.currentUser.copy())
-                    setResult(RESULT_OK)
-                    finish()
+                    val currentUser = FirebaseAuth.getInstance().currentUser
+                    currentUser?.updatePassword(newPassword.text.toString())?.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(app.applicationContext, "User Password Updated", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(app.applicationContext, "Please Enter a Valid Password", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
 
             }

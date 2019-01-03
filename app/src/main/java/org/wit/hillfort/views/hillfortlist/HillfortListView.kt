@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
@@ -30,7 +31,8 @@ class HillfortListView : BaseView(), HillfortListener {
         recyclerView.layoutManager = layoutManager
         presenter.getHillforts()
 
-        //loadHillforts()
+        val bottomNavView: BottomNavigationView = findViewById(R.id.hillfortBottomNav)
+        bottomNavView.setOnNavigationItemSelectedListener { menuItem -> onOptionsItemSelected(menuItem) }
 
         nav_view.setNavigationItemSelectedListener { menuItem ->
             onOptionsItemSelected(menuItem)
