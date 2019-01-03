@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import org.wit.hillfort.R
+import org.wit.hillfort.views.login.LoginView
 
 
 class SplashView : AppCompatActivity() {

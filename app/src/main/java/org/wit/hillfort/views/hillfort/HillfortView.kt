@@ -63,6 +63,7 @@ class HillfortView : BaseView() {
         description.setText(hillfort.description)
         additionalNotes.setText(hillfort.additionalNotes)
         visitedCheckbox.isChecked = hillfort.visitedCheckbox
+        favoriteCheckbox.isChecked = hillfort.favorite
         datePicker.updateDate(hillfort.year, hillfort.month, hillfort.day)
         btnAdd.setText(R.string.save_hillfort)
         rating.rating = hillfort.rating

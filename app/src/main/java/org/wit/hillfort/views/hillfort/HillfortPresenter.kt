@@ -41,16 +41,12 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             edit = true
             hillfort = view.intent.extras.getParcelable<HillfortModel>("hillfort_edit")
             view.showHillfort(hillfort)
+            locationUpdate(hillfort.location.lat, hillfort.location.lng)
         } else {
             if (checkLocationPermissions(view)) {
                 doSetCurrentLocation()
             }
-            hillfort.lat = defaultLocation.lat
-            hillfort.lng = defaultLocation.lng
-        }
-
-        if (checkLocationPermissions(view)) {
-            doSetCurrentLocation()
+            //hillfort.location = defaultLocation
         }
     }
 
@@ -100,23 +96,23 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doSetLocation() {
-        view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(hillfort.lat, hillfort.lng, hillfort.zoom))
+        view?.navigateTo(VIEW.LOCATION, LOCATION_REQUEST, "location", Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom))
     }
 
     fun doConfigureMap(m: GoogleMap) {
         map = m
-        locationUpdate(hillfort.lat, hillfort.lng)
+        locationUpdate(hillfort.location.lat, hillfort.location.lng)
     }
 
     fun locationUpdate(lat: Double, lng: Double) {
-        hillfort.lat = lat
-        hillfort.lng = lng
-        hillfort.zoom = 15f
+        hillfort.location.lat = lat
+        hillfort.location.lng = lng
+        hillfort.location.zoom = 15f
         map?.clear()
         map?.uiSettings?.setZoomControlsEnabled(true)
-        val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.lat, hillfort.lng))
+        val options = MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
         map?.addMarker(options)
-        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.lat, hillfort.lng), hillfort.zoom))
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(hillfort.location.lat, hillfort.location.lng), hillfort.location.zoom))
         view?.showHillfort(hillfort)
     }
 
@@ -133,10 +129,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             LOCATION_REQUEST -> {
                 if (data != null) {
                     val location = data.extras.getParcelable<Location>("location")
-                    hillfort.lat = location.lat
-                    hillfort.lng = location.lng
-                    hillfort.zoom = location.zoom
-                    locationUpdate(hillfort.lat, hillfort.lng)
+                    hillfort.location = location.copy()
+                    locationUpdate(hillfort.location.lat, hillfort.location.lng)
                 }
             }
         }
