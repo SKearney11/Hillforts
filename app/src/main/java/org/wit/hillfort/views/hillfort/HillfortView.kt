@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.gms.maps.GoogleMap
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
 import org.jetbrains.anko.AnkoLogger
@@ -54,6 +55,7 @@ class HillfortView : BaseView() {
             map = it
             presenter.doConfigureMap(map)
         }
+        Slidr.attach(this)
     }
 
     override fun showHillfort(hillfort: HillfortModel) {
