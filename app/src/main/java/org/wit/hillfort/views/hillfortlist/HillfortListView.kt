@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.*
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.wit.hillfort.R
@@ -41,6 +42,22 @@ class HillfortListView : BaseView(), HillfortListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        val searchView: SearchView = menu?.findItem(R.id.item_search)?.actionView as SearchView
+        searchView.queryHint = "Search Hillfort"
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextChange(newText: String): Boolean {
+                presenter.getHillforts()
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                if (query.isBlank() || query.isEmpty()) presenter.getHillforts()
+                else presenter.getHillforts(query)
+                return false
+            }
+        })
+
         return super.onCreateOptionsMenu(menu)
     }
 

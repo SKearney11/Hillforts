@@ -30,6 +30,12 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
             }
     }
 
+    fun getHillforts(searchString: String){
+        async(UI){
+            view!!.showHillforts(app.hillforts.findAll().filter { it.title.contains(searchString) })
+        }
+    }
+
     fun doAddHillfort(){
         view!!.startActivityForResult<HillfortView>(0)
     }
