@@ -77,4 +77,8 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         val foundPlacemark: HillfortModel? = hillforts.find { it.id == id }
         return foundPlacemark
     }
+
+    override fun clear() {
+        hillforts.clear()
+    }
 }

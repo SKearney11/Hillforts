@@ -2,6 +2,7 @@ package org.wit.hillfort.views.hillfortlist
 
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import kotlinx.coroutines.experimental.android.UI
 import org.jetbrains.anko.intentFor
@@ -15,6 +16,7 @@ import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.views.SettingsView
 import org.wit.hillfort.views.hillfort.HillfortView
 import kotlinx.coroutines.experimental.async
+import org.wit.hillfort.views.VIEW
 
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
@@ -45,8 +47,9 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doLogout(){
-        view!!.setResult(AppCompatActivity.RESULT_OK)
-        view!!.finish()
+        FirebaseAuth.getInstance().signOut()
+        app.hillforts.clear()
+        view?.navigateTo(VIEW.LOGIN)
     }
 
     fun doHome(){

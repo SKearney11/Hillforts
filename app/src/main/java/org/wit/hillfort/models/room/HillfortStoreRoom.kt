@@ -1,4 +1,4 @@
-package org.wit.hillfort.room
+package org.wit.hillfort.models.room
 import org.jetbrains.anko.coroutines.experimental.bg
 import android.content.Context
 import androidx.room.Room
@@ -42,6 +42,6 @@ class HillfortStoreRoom(val context: Context) : HillfortStore {
         }
     }
 
-    fun clear() {
+    override fun clear() {
     }
 }

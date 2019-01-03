@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.jetbrains.anko.AnkoLogger
@@ -43,7 +44,7 @@ class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, pr
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             itemView.hillfortTitle.text = hillfort.title
             itemView.description.text = hillfort.description
-            if (hillfort.images.isNotEmpty()) itemView.imageIcon.setImageBitmap(readImageFromPath(itemView.context, hillfort.images.first()))
+            if (hillfort.images.isNotEmpty()) Glide.with(itemView.context).load(hillfort.images.first()).into(itemView.imageIcon)
             itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
         }
     }
@@ -52,7 +53,6 @@ class HillfortAdapter constructor(private var hillforts: List<HillfortModel>, pr
 class HillfortImageAdapter constructor(private var images: List<String>) : androidx.recyclerview.widget.RecyclerView.Adapter<HillfortImageAdapter.MainHolder>(), AnkoLogger{
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MainHolder {
-        info("I AM HERE\n")
         return MainHolder(
             LayoutInflater.from(parent.context).inflate(
                 R.layout.image_item,
@@ -72,12 +72,8 @@ class HillfortImageAdapter constructor(private var images: List<String>) : andro
     class MainHolder constructor(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView), AnkoLogger {
 
         fun bind(image: String){
-            info("TESTIN\n\n\n\n\n\n")
             var imageView: ImageView = itemView.findViewById(R.id.iv_image)
-            Picasso.get()
-                .load(image)
-                .fit()
-                .into(imageView)
+            Glide.with(itemView.context).load(image).into(imageView)
         }
     }
 }
