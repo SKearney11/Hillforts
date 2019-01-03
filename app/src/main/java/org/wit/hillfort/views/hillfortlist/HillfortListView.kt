@@ -28,7 +28,7 @@ class HillfortListView : BaseView(), HillfortListener {
         presenter = HillfortListPresenter(this)
         val layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        showHillforts(presenter.getHillforts())
+        presenter.getHillforts()
 
         //loadHillforts()
 

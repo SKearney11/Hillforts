@@ -30,17 +30,17 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         }
     }
 
-    override fun findAll(): MutableList<HillfortModel> {
+    override suspend fun findAll(): MutableList<HillfortModel> {
         return hillforts
     }
 
-    override fun create(hillfort: HillfortModel) {
+    override suspend fun create(hillfort: HillfortModel) {
         hillfort.id = generateRandomId()
         hillforts.add(hillfort)
         serialize()
     }
 
-    override fun update(hillfort: HillfortModel) {
+    override suspend fun update(hillfort: HillfortModel) {
         var foundHillfort: HillfortModel? = hillforts.find { p -> p.id == hillfort.id }
         if (foundHillfort != null) {
             foundHillfort.title = hillfort.title
@@ -60,12 +60,12 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         }
     }
 
-    override fun delete(hillfort: HillfortModel) {
+    override suspend fun delete(hillfort: HillfortModel) {
         hillforts.remove(hillfort)
         serialize()
     }
 
-    private fun serialize() {
+    private suspend fun serialize() {
         val jsonString = gsonBuilder.toJson(hillforts, listType)
         write(context, JSON_FILE, jsonString)
     }
@@ -75,7 +75,7 @@ class HillfortJSONStore : HillfortStore, AnkoLogger {
         hillforts = Gson().fromJson(jsonString, listType)
     }
 
-    override fun findById(id:Long) : HillfortModel? {
+    override suspend fun findById(id:Long) : HillfortModel? {
         val foundPlacemark: HillfortModel? = hillforts.find { it.id == id }
         return foundPlacemark
     }

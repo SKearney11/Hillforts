@@ -9,6 +9,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_hillfort.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.intentFor
 import org.wit.hillfort.R
 import org.wit.hillfort.helpers.checkLocationPermissions
@@ -64,9 +66,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
         hillfort.rating = rating
         if (hillfort.title.isNotEmpty()) {
             if (edit) {
-                app.hillforts.update(hillfort.copy())
+                async(UI) {
+                    app.hillforts.update(hillfort.copy())
+                }
             } else {
-                app.hillforts.create(hillfort.copy())
+                async(UI) {
+                    app.hillforts.create(hillfort.copy())
+                }
             }
             view?.finish()
         }
@@ -77,8 +83,10 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doDelete(){
-        app.hillforts.delete(hillfort)
-        view?.finish()
+        async(UI) {
+            app.hillforts.delete(hillfort)
+            view?.finish()
+        }
     }
 
     fun doSelectImage(){

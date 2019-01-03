@@ -1,13 +1,17 @@
 package org.wit.hillfort.models
 
 import android.os.Parcelable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class HillfortModel(var id:Long = 0,
+@Entity
+data class HillfortModel(@PrimaryKey(autoGenerate = true)var id:Long = 0,
                          var title: String = "",
                          var description: String = "",
-                         var images: ArrayList<String> = ArrayList(),
+                         @Embedded var images: ArrayList<String> = ArrayList(),
                          var lat : Double = 0.0,
                          var lng: Double = 0.0,
                          var zoom: Float = 0f,

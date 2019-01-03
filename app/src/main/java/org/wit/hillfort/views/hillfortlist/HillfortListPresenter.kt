@@ -3,6 +3,7 @@ package org.wit.hillfort.views.hillfortlist
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
+import kotlinx.coroutines.experimental.android.UI
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
@@ -13,6 +14,7 @@ import org.wit.hillfort.views.BaseView
 import org.wit.hillfort.views.map.HillfortMapView
 import org.wit.hillfort.views.SettingsView
 import org.wit.hillfort.views.hillfort.HillfortView
+import kotlinx.coroutines.experimental.async
 
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
@@ -20,7 +22,11 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
         app = view.application as MainApp
     }
 
-    fun getHillforts()=app.hillforts.findAll()
+    fun getHillforts(){
+            async(UI){
+                view!!.showHillforts(app.hillforts.findAll())
+            }
+    }
 
     fun doAddHillfort(){
         view!!.startActivityForResult<HillfortView>(0)
@@ -48,6 +54,8 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doShowFavorites(checked: Boolean){
-        view!!.showHillforts(if (checked) app.hillforts.findAll().filter { it.favorite } else app.hillforts.findAll())
+        async(UI) {
+            view!!.showHillforts(if (checked) app.hillforts.findAll().filter { it.favorite } else app.hillforts.findAll())
+        }
     }
 }
